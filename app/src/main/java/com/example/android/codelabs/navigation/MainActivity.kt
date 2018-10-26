@@ -26,7 +26,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 
 /**
@@ -77,8 +82,8 @@ class MainActivity : AppCompatActivity() {
         // TODO STEP 9.4 - Use NavigationUI to set up a Navigation View
 //        // In split screen mode, you can drag this view out from the left
 //        // This does NOT modify the actionbar
-//        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
-//        sideNavView?.setupWithNavController(navController)
+        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
+        sideNavView?.setupWithNavController(navController)
         // TODO END STEP 9.4
     }
 
@@ -87,8 +92,8 @@ class MainActivity : AppCompatActivity() {
 //        // This allows NavigationUI to decide what label to show in the action bar
 //        // And, since we are passing in drawerLayout, it will also determine whether to
 //        // show the up arrow or drawer menu icon
-//        drawerLayout = findViewById(R.id.drawer_layout)
-//        setupActionBarWithNavController(navController, drawerLayout)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        setupActionBarWithNavController(navController, drawerLayout)
         // TODO END STEP 9.5
     }
 
@@ -105,22 +110,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
         // TODO STEP 9.2 - Have Navigation UI Handle the item selection - make sure to delete
         //  the old return statement above
 //        // Have the NavigationUI look for an action or destination matching the menu
 //        // item id and navigate there if found.
 //        // Otherwise, bubble up to the parent.
-//        return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
-//                || super.onOptionsItemSelected(item)
+        return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
+                || super.onOptionsItemSelected(item)
         // TODO END STEP 9.2
     }
 
     // TODO STEP 9.6 - Have NavigationUI handle up behavior in the ActionBar
-//    override fun onSupportNavigateUp(): Boolean {
-//        // Allows NavigationUI to support proper up navigation or the drawer layout
-//        // drawer menu, depending on the situation
-//        return drawerLayout.navigateUp(findNavController(R.id.my_nav_host_fragment))
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        // Allows NavigationUI to support proper up navigation or the drawer layout
+        // drawer menu, depending on the situation
+        return drawerLayout.navigateUp(findNavController(R.id.my_nav_host_fragment))
+    }
     // TODO END STEP 9.6
 }
